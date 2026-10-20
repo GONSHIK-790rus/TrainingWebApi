@@ -1,0 +1,48 @@
+@TrainingWebAPI_HostAddress = http://localhost:5279
+
+POST {{TrainingWebApi_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "name": "Egor",
+  "age": 20,
+  "isActive": true
+}
+
+###
+
+POST {{TrainingWebApi_HostAddress}}/users
+Content-Type: application/json
+
+{
+  "name": "Alex",
+  "age": 35,
+  "isActive": false
+}
+
+###
+
+@userId = 95e15418-f322-46dc-967b-08394bc40249
+DELETE {{TrainingWebAPI_HostAddress}}/users/{{userId}}
+
+###
+
+PUT {{TrainingWebApi_HostAddress}}/users/{{userId}}
+Content-Type: application/json
+
+{
+  "name": "Egor Updated",
+  "age": 21,
+  "isActive": false
+}
+
+###
+
+PATCH {{TrainingWebApi_HostAddress}}/users/{{userId}}
+Content-Type: application/json
+
+{
+  "age": 99
+}
+
+###
