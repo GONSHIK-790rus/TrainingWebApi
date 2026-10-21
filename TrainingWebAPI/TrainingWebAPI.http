@@ -1,17 +1,17 @@
 @TrainingWebAPI_HostAddress = http://localhost:5279
 
-POST {{TrainingWebApi_HostAddress}}/users
+POST {{TrainingWebAPI_HostAddress}}/users
 Content-Type: application/json
 
 {
-  "name": "Egor",
-  "age": 20,
+  "name": "Dima",
+  "age": 21,
   "isActive": true
 }
 
 ###
 
-POST {{TrainingWebApi_HostAddress}}/users
+POST {{TrainingWebAPI_HostAddress}}/users
 Content-Type: application/json
 
 {
@@ -22,27 +22,31 @@ Content-Type: application/json
 
 ###
 
-@userId = 95e15418-f322-46dc-967b-08394bc40249
+@userId = 8db6d486-1e9a-4f55-9b7f-9156ffcdf273
 DELETE {{TrainingWebAPI_HostAddress}}/users/{{userId}}
 
 ###
 
-PUT {{TrainingWebApi_HostAddress}}/users/{{userId}}
+PUT {{TrainingWebAPI_HostAddress}}/users/{{userId}}
 Content-Type: application/json
 
 {
-  "name": "Egor Updated",
-  "age": 21,
+  "name": "Vika UPD",
+  "age": 23,
   "isActive": false
 }
 
 ###
 
-PATCH {{TrainingWebApi_HostAddress}}/users/{{userId}}
+PATCH {{TrainingWebAPI_HostAddress}}/users/{{userId}}
 Content-Type: application/json
 
 {
-  "age": 99
+  "isActive": true
 }
+
+###
+
+GET {{TrainingWebAPI_HostAddress}}/db-check
 
 ###

@@ -1,43 +1,49 @@
-﻿using TrainingWebAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using TrainingWebAPI.Data;
+using TrainingWebAPI.Models;
 
 namespace TrainingWebAPI.Services;
 
 public class UserService : IUserService {
     private readonly UserIdGenerator _idGenerator;
+    private readonly AppDbContext _appDbContext;
 
-    private List<User> Users { get; } = [];
-
-    public UserService(UserIdGenerator idGenerator) {
+    public UserService(UserIdGenerator idGenerator, AppDbContext appDbContext) {
         _idGenerator = idGenerator;
+        _appDbContext = appDbContext;
     }
 
-    public User Create(User user) {
+    public async Task<User> CreateAsync(User user) {
         user.Id = _idGenerator.Create();
 
-        Users.Add(user);
+        _appDbContext.Users.Add(user);
+        await _appDbContext.SaveChangesAsync();
 
         return user;
     }
 
-    public List<User> GetAll() {
-        return Users;
+    public Task<List<User>> GetAllAsync() {
+        return _appDbContext.Users.ToListAsync();
     }
 
-    public User? GetById(Guid id) {
-        return Users.FirstOrDefault(user => user.Id == id);
+    public Task<User?> GetByIdAsync(Guid id) {
+        return _appDbContext.Users.FirstOrDefaultAsync(user => user.Id == id);
     }
 
-    public bool DeleteById(Guid id) { 
-        var user = GetById(id);
+    public async Task<bool> DeleteByIdAsync(Guid id) { 
+        var user = await GetByIdAsync(id);
 
         if (user == null)
             return false;
         
-        return Users.Remove(user);
+        _appDbContext.Users.Remove(user);
+        await _appDbContext.SaveChangesAsync();
+
+        return true;
     }
 
-    public User? Update(Guid id, User newUser) {
-        var user = GetById(id);
+    public async Task<User?> UpdateAsync(Guid id, User newUser) {
+        var user = await GetByIdAsync(id);
 
         if (user == null)
             return null;
@@ -46,11 +52,13 @@ public class UserService : IUserService {
         user.Age = newUser.Age;
         user.IsActive = newUser.IsActive;
 
+        await _appDbContext.SaveChangesAsync();
+
         return user;
     }
 
-    public User? Patch(Guid id, UserPatch userPatch) {
-        var user = GetById(id);
+    public async Task<User?> PatchAsync(Guid id, UserPatch userPatch) {
+        var user = await GetByIdAsync(id);
 
         if (user == null)
             return null;
@@ -63,6 +71,8 @@ public class UserService : IUserService {
 
         if (userPatch.IsActive != null)
             user.IsActive = userPatch.IsActive.Value;
+
+        await _appDbContext.SaveChangesAsync();
 
         return user;
     }
