@@ -13,8 +13,10 @@ public class AppDbContext : DbContext {
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
          base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>().ToTable("users");
-        modelBuilder.Entity<User>().HasKey(user => user.Id);
+        modelBuilder.Entity<User>().ToTable("users", table =>
+            table.HasCheckConstraint("users_age_check", "age > 0"));
+        modelBuilder.Entity<User>().HasKey(user => user.Id)
+            .HasName("users_pkey");
 
         modelBuilder.Entity<User>()
             .Property(user => user.Id)
