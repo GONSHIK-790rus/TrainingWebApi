@@ -23,7 +23,7 @@ public class UserService : IUserService {
     }
 
     public Task<List<User>> GetAllAsync() {
-        return _appDbContext.Users.ToListAsync();
+        return _appDbContext.Users.AsNoTracking().ToListAsync();
     }
 
     public Task<User?> GetByIdAsync(Guid id) {

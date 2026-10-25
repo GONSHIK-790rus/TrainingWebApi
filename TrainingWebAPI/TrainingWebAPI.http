@@ -22,7 +22,7 @@ Content-Type: application/json
 
 ###
 
-@userId = 8db6d486-1e9a-4f55-9b7f-9156ffcdf273
+@userId = ae82f6ce-1db2-42f3-8b99-09785e56e37d
 DELETE {{TrainingWebAPI_HostAddress}}/users/{{userId}}
 
 ###
@@ -31,9 +31,9 @@ PUT {{TrainingWebAPI_HostAddress}}/users/{{userId}}
 Content-Type: application/json
 
 {
-  "name": "Vika UPD",
-  "age": 23,
-  "isActive": false
+  "name": "Vika",
+  "age": 22,
+  "isActive": true
 }
 
 ###
